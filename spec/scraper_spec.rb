@@ -32,7 +32,7 @@ describe "scraper-app" do
     end
   end
 
-  it "should return URLs for anchor tags" do
+  it "should return URLs for anchor tags with hrefs" do
     urls = get_links '/'
     urls.length.should >= 4
     urls[0]['url'].should =~ %r{/a$}

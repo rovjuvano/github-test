@@ -9,7 +9,7 @@ class Scraper
 
   def list_urls
     body = Net::HTTP.get_response(@url).body
-    selector = @class.nil? ? 'a' : "a.#{@class}"
+    selector = 'a[href]' + (@class.nil? ? '' : ".#{@class}")
     Nokogiri::HTML(body).css(selector).inject([]) do |urls, tag|
       urls << {
         :url   => clean_url( tag.attr(:href), @url ),
