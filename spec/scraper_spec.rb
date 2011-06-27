@@ -15,4 +15,13 @@ describe "scraper-app" do
     last_response.headers['Content-Type'].should == 'application/json'
     JSON.parse(last_response.body)
   end
+
+  it "should return array of URLs" do
+    get '/'
+    urls = JSON.parse(last_response.body)
+    urls.length.should > 0
+    urls.each do |url|
+      url['url'].should_not be_nil
+    end
+  end
 end

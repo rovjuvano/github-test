@@ -3,5 +3,5 @@ require 'json'
 
 get '/' do
   content_type :json
-  [].to_json
+  [ :url => 'foo' ].to_json
 end
