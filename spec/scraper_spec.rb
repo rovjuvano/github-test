@@ -34,7 +34,7 @@ describe "scraper-app" do
 
   it "should return URLs for anchor tags" do
     urls = get_links '/'
-    urls.length.should == 4
+    urls.length.should >= 4
     urls[0]['url'].should =~ %r{/a$}
     urls[1]['url'].should =~ %r{/a\.a$}
     urls[2]['url'].should =~ %r{/a\.b$}
@@ -64,5 +64,10 @@ describe "scraper-app" do
      get '/a?url=https://www.google.com/'
      last_response.should_not be_ok
      last_response.body.should =~ /something bad happened/i
+  end
+
+  it "should convert relative URLs into absolute" do
+    url = get_links('/a.rel')[0]
+    url['url'].should == 'http://example.org/rel'
   end
 end
