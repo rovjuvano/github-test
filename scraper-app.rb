@@ -7,8 +7,12 @@ get '/' do
 end
 
 get %r{/a(?:\.(.+))?} do |style|
-  scraper = Scraper.new params[:url] || 'http://wimp.com/', style
-  urls = scraper.list_urls
+  begin
+    scraper = Scraper.new params[:url] || 'http://wimp.com/', style
+    urls = scraper.list_urls
+  rescue
+    return 500, 'Something bad happened'
+  end
   content_type :json
   urls.to_json
 end

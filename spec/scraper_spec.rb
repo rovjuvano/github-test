@@ -59,4 +59,10 @@ describe "scraper-app" do
     urls.length.should == 2
     urls[0]['title'].should == 'example link 1'
   end
+
+  it "should return error if somethings goes wrong" do
+     get '/a?url=https://www.google.com/'
+     last_response.should_not be_ok
+     last_response.body.should =~ /something bad happened/i
+  end
 end
