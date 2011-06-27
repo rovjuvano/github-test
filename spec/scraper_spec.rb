@@ -53,4 +53,10 @@ describe "scraper-app" do
     urls.length.should == 2
     urls[0]['title'].should == 'a[href].b'
   end
+
+  it "should accept url parameter" do
+    urls = get_links '/a?url=http://www.example.com/'
+    urls.length.should == 2
+    urls[0]['title'].should == 'example link 1'
+  end
 end
