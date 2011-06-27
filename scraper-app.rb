@@ -8,7 +8,7 @@ end
 
 get %r{/a(?:\.(.+))?} do |style|
   begin
-    scraper = Scraper.new params[:url] || 'http://wimp.com/', style
+    scraper = Scraper.new params[:url] || settings.default_url, style
     urls = scraper.list_urls
   rescue
     return 500, 'Something bad happened'
