@@ -70,4 +70,9 @@ describe "scraper-app" do
     url = get_links('/a.rel')[0]
     url['url'].should == 'http://example.org/rel'
   end
+
+  it "should escape unsafe characters in URLs" do
+    url = get_links('/a.unsafe')[0]
+    url['url'].should =~ /%5Eunsafe%5E/i
+  end
 end

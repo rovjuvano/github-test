@@ -21,8 +21,9 @@ class Scraper
 
   private
     def clean_url(href, root)
-      uri = URI.parse href
-      uri = root.merge(href) if uri.relative?
+      href_escaped = URI::escape(href)
+      uri = URI.parse href_escaped
+      uri = root.merge(href_escaped) if uri.relative?
       uri.normalize.to_s
     end
 end
