@@ -1,1 +1,27 @@
-I can haz commit.
+Scraper provides a web service that returns URLs from a page on another website. Results are returned in JSON format.
+
+Requires Ruby 1.9. See Gemfile for other requirements.
+
+
+## EXAMPLES
+GET /a - all a[href] URLs from default_url
+GET /a.b - all a[href] URLs with the CSS class 'b' from default_url
+GET /a?url=http://www.google.com/ - all a[href] URLs from Google's main page
+
+to run: rackup
+to use: curl -L http://localhost:9292/
+
+See client.rb for example use in Ruby
+
+
+## CONFIGURATION config.ru
+default_url - default value for url parameter
+
+
+## KNOWN ISSUES
+* Does not support SSL hosts
+* Does not support cookies
+* Does not support HTTP Authentication
+* No validation on URL parameter
+* Minimal error handling around fetching host URL and parsing response
+* Many HTML tags unsupported like img, script, object, embed, audio, video
