@@ -3,6 +3,7 @@ require 'spec_helper'
 describe "scraper-app" do
   def get_links(path)
     get path
+    follow_redirect! if last_response.redirect?
     JSON.parse(last_response.body)
   end
 
@@ -12,11 +13,12 @@ describe "scraper-app" do
 
   it "should get root URL" do
     get '/'
-    last_response.should be_ok
+    last_response.should be_redirect
   end
 
   it "should return JSON" do
     get '/'
+    follow_redirect!
     last_response.headers['Content-Type'].should == 'application/json'
     JSON.parse(last_response.body)
   end
@@ -44,5 +46,11 @@ describe "scraper-app" do
     url['url'].should == 'http://localhost/a'
     url['title'].should == 'a[href]'
     url['raw'].should == '<a href="http://localhost/a">a[href]</a>'
+  end
+
+  it "should filter based on CSS class" do
+    urls = get_links '/a.b'
+    urls.length.should == 2
+    urls[0]['title'].should == 'a[href].b'
   end
 end
