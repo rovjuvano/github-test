@@ -10,7 +10,9 @@ class Scraper
     body = Net::HTTP.get_response(@url).body
     Nokogiri::HTML(body).css('a').inject([]) do |urls, tag|
       urls << {
-        :url => tag.attr(:href),
+        :url   => tag.attr(:href),
+        :title => tag.text,
+        :raw   => tag.to_s,
       }
     end
   end

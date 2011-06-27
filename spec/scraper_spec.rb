@@ -38,4 +38,11 @@ describe "scraper-app" do
     urls[2]['url'].should =~ %r{/a\.b$}
     urls[3]['url'].should =~ %r{/a\.a\+b$}
   end
+
+  it "should include URL, title, and raw HTML" do
+    url = get_links('/')[0]
+    url['url'].should == 'http://localhost/a'
+    url['title'].should == 'a[href]'
+    url['raw'].should == '<a href="http://localhost/a">a[href]</a>'
+  end
 end
