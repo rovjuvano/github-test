@@ -75,4 +75,9 @@ describe "scraper-app" do
     url = get_links('/a.unsafe')[0]
     url['url'].should =~ /%5Eunsafe%5E/i
   end
+
+  it "should strip surrounding whitespace from title" do
+    url = get_links('/a.ws')[0]
+    url['title'].should =~ /^[^\s].*[^\s]$/
+  end
 end

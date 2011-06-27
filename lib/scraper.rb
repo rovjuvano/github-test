@@ -13,7 +13,7 @@ class Scraper
     Nokogiri::HTML(body).css(selector).inject([]) do |urls, tag|
       urls << {
         :url   => clean_url( tag.attr(:href), @url ),
-        :title => tag.text,
+        :title => clean_title(tag.text),
         :raw   => tag.to_s,
       }
     end
@@ -25,5 +25,9 @@ class Scraper
       uri = URI.parse href_escaped
       uri = root.merge(href_escaped) if uri.relative?
       uri.normalize.to_s
+    end
+
+    def clean_title(title)
+      title.strip
     end
 end
